@@ -55,20 +55,20 @@ router.get('/errorRegistro',(req,res)=>{
 
 
 router.post('/' , joaLogin,passport.authenticate('login',{
-    failureRedirect:'/errorLogin',
-    successRedirect:'/datos', //redirecciona a una ruta
+    failureRedirect:'/api/login/errorLogin',
+    successRedirect:'/api/login/datos', //redirecciona a una ruta
 }))
 
 
 router.get('/errorLogin',(req,res)=>{
     //res.render('errorLogin')
-    console.log('Login Error')
+    console.log('Login con Error')
 
-    const usuario={
-        nombre:req.nombre,
-        error:true
-    }
-    res.json(usuario)
+    res.json({
+        mensaje:'Login con error',
+        nombre:req.user.nombre,
+        error:false
+    })
 
 })
 
@@ -81,11 +81,11 @@ router.get('/datos',(req,res)=>{
     //res.render('info',{nombre:req.user.nombre})
     console.log('Login Sin error')
 
-    const usuario={
-        nombre:req.nombre,
+    res.json({
+        mensaje:'Login sin error',
+        nombre:req.user.nombre,
         error:false
-    }
-    res.json(usuario)
+    })
 })
 
 router.get('/logout',(req,res)=>{

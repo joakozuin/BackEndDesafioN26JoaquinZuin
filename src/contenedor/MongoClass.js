@@ -13,20 +13,18 @@ class MongoClase {
   async findNombre(nombre){
     try {
 
-        console.log('dentro de mongoClass')
-        console.log(nombre)
         
         const todos=await this.coleccion.findOne({nombre})
 
-        console.log('respuesta sin error')
-        console.log(todos)
+        /* console.log('mongoClass metodo findNombre respuesta sin error')
+        console.log(todos) */
 
         return {usuario:todos,error:false}
 
     } catch (error) {
-        //throw new Error('(Metodo findNombre)-Mensaje de Error:',error)
-        console.log('respuesta con error')
-        return {usuario:false,error:error}
+        throw new Error('(Metodo findNombre)-Mensaje de Error:',error)
+        /* console.log('mongoClass metodo findNombre respuesta con error')
+        return {usuario:false,error:error} */
     }
   }
 

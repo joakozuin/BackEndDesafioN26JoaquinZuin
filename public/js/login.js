@@ -39,9 +39,7 @@ botonLogin.addEventListener("click", (e) => {
   console.log("Cliente pidiendo acceso al servidor");
   console.log(usuario)
 
-                      //socket.emit("nuevoProducto", producto);
-
-  //Petición Post HTTP envia producto a la ruta
+  //Petición Post HTTP envia usuario a la ruta
   //en formato JSON
 
   fetch("http://localhost:8080/api/login/", {
@@ -51,11 +49,20 @@ botonLogin.addEventListener("click", (e) => {
     },
     body: JSON.stringify(usuario),
   })
+
     .then((respuesta) =>{
-          console.log("1-Todo bien:", respuesta.url);
-          return respuesta.json()
+           console.log("1-Todo bien respuesta:")
+           console.log( respuesta)
+
+          console.log("1-Todo bien respuesta.url:", respuesta.url);
+          console.log("1-Todo bien respuesta mensaje:",respuesta.mensaje);
+          //console.log( respuesta.json());
+          //return respuesta.json()
+
     } )
     .then((data) => {
+      console.log("2-Nombre data:", data);
+      console.log("2-Nombre Mensaje:", data.mensaje)
       console.log("2-Nombre Usuario:", data.nombre);
       console.log("2-Error         :", data.error);
 
@@ -68,6 +75,11 @@ botonLogin.addEventListener("click", (e) => {
     .catch((error) => {
       console.error("Error:", error);
     });
+
+
+
+
+
 
 }); 
 

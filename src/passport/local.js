@@ -56,18 +56,24 @@ passport.use('login',new LocalStrategy({
 
     const usuarioBD = await Usuario.findNombre(nombre)
 
-    const usPassBD=usuarioBD.usuario.contrasena
+    if(!usuarioBD.usuario){
 
+      console.log('Passport Login No existe Usuario')
+      return done(null,false)
+ 
+    }
+
+    const usPassBD=usuarioBD.usuario.contrasena
+    
     const usP=comparar(password,usPassBD)
 
     if(usuarioBD && usP){
 
+      console.log('Passport Login Existe Usuario')
       return done(null, usuarioBD)
 
      }
-
-     done(null,false)
-
+     
 }
 
 ))
@@ -78,11 +84,22 @@ passport.use('login',new LocalStrategy({
 //magia puede tener otro nombre, pero parece q se debe
 //repetar ese nombre en la serealización y deserealización
 passport.serializeUser((usuario,done)=>{
-    done(null,usuario.id)
+
+  console.log('Passport Serializando el usuario')
+  console.log(usuario)
+  console.log(usuario.usuario._id)
+
+    done(null,usuario.usuario._id)
 })
 
 passport.deserializeUser(async(id,done)=>{
+  console.log('Passport desSerializando el usuario')
+  console.log(id)
+  
     const usuario = await Usuario.findById(id)
+
+    console.log(usuario)
+
     done(null,usuario)
 })
 
