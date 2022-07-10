@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <Title>ProyBackEnd</Title>
+    <!-- <link href="//cdn.muicss.com/mui-0.10.3/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.10.3/js/mui.min.js"></script> -->
+    <link href="./css/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="./css/estilos.css" rel="stylesheet" type="text/css" />
+    
+  </head>
+   <body class="contenedor" style="background-color: rgb(247, 251, 255)" >
+     
+    <div class="mui-container-fluid ">
+
+      <div class="mui--text-display1  mui--text-center" style="height:50px;margin-top:20px">Coder House eCommerce  BackEnd</div>
+      <div class="mui-divider"></div>
+      
+         <!--  -->
+          <div class="mui-row" style="margin-top:10px;background-color: rgb(241, 238, 238)">
+
+           <div class="mui--text-display1  mui--text-center" style="height:50px; color:blue">Ha ocurrido un Error al Registrarse</div>
+
+           <div class="mui-col-md-2" style="background-color: rgb(241, 238, 238)">
+            <h3></h3>
+           </div>
+
+           <!--Usuario Logeado  -->
+            <script type="text/x-handlebars-template" id="handlebLogoutUsuario">
+              <div class="mui-col-md-8 mui--text-center " style="background-color: rgb(208, 222, 235)">
+                <h3>Hasta Luego:{{usuario}}</h3>
+              </div>
+            </script>
+
+            <div id="rendLogoutUsuario"></div>
+           <!--Usuario Logeado  -->
+
+
+           <div class="mui-col-md-2"  style="background-color: rgb(241, 238, 238)">
+            <h3></h3>
+           </div>
+
+          </div>
+      
+      <!--  -->
+
+     
+    
+     <!--  <div class="mui-col-md-2"></div> -->
+
+      <div class="mui-divider"></div>
+
+    
+        <div class="mui-row">
+          <div class="mui-col-md-4">
+            <h1>Ir a Login</h1>
+             <div>
+              <button onclick="location.href='index.html'" id="enviarRegistrar" class=" mui-btn mui-btn--raised mui-btn--accent"> Login</button>
+            </div>
+          </div>
+
+           <div class="mui-col-md-4" ></div>
+
+           <div class="mui-col-md-4"></div>
+        </div>
+     
+       <br/>
+ 
+       <div class="mui-divider"></div>
+      
+        <!--  -->
+
+    </div><!-- container fluid -->
+
+
+
+    <script src="./js/mui.min.js"></script>
+   
+    <script src="./socket.io/socket.io.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/logout.js"></script>
+   
+  
+  </body>
+</html>
