@@ -9,7 +9,7 @@ function isAuth(req,res,next){
     
         next()
     } else {
-        res.render('login')
+        res.redirect('/api/login/errorLogin')
     }
 }
 
@@ -22,52 +22,51 @@ const joaLogin=(req,res,next)=>{
 }
 
 
-router.post('/registro',joaLogin, passport.authenticate('registro',{
-    failureRedirect:'/errorRegistro',
-    successRedirect:'/registro',
+
+
+router.post('/registro', passport.authenticate('registro',{
+    failureRedirect:'/api/login/errorRegistro',
+    successRedirect:'/api/login/registrar',
 }))
 
-
-router.get('/registro',(req,res)=>{
+router.get('/registrar',(req,res)=>{
     //res.render('registro')
-
     console.log('Registro Sin error')
-
-    const usuario={
-        nombre:req.nombre,
+    res.json({
+        mensaje:'Registro sin error',
+        nombre:req.user[0].nombre,
         error:false
-    }
-    res.json(usuario)
+    })
 })
 
 
 router.get('/errorRegistro',(req,res)=>{
-
     console.log('Registro Error')
-
     //res.render('errorRegistro')
-    const usuario={
-        nombre:req.nombre,
+    res.json({
+        mensaje:'Registro con error',
+        nombre:'',
         error:true
-    }
-    res.json(usuario)
+    })
 })
 
 
-router.post('/' , joaLogin,passport.authenticate('login',{
+router.post('/' ,passport.authenticate('login',{
     failureRedirect:'/api/login/errorLogin',
     successRedirect:'/api/login/datos', //redirecciona a una ruta
-}))
+    failureMessage:true,
+    successMessage:true
+}),)
 
 
 router.get('/errorLogin',(req,res)=>{
     //res.render('errorLogin')
-    console.log('Login con Error')
-
+    console.log('ruta errorLogin-Login con Error')
+    //console.log(req.user[0].nombre)
     res.json({
         mensaje:'Login con error',
-        nombre:req.user.nombre,
-        error:false
+        nombre:'',
+        error:true
     })
 
 })
@@ -77,29 +76,40 @@ router.get('/errorLogin',(req,res)=>{
 
 }) */
 
-router.get('/datos',(req,res)=>{
+router.get('/datos',isAuth,(req,res)=>{
     //res.render('info',{nombre:req.user.nombre})
-    console.log('Login Sin error')
-
+    console.log('ruta datos-Login sin Error')
     res.json({
         mensaje:'Login sin error',
-        nombre:req.user.nombre,
+        nombre:req.user[0].nombre,
         error:false
     })
 })
 
 router.get('/logout',(req,res)=>{
 
+    const nombre=req.user[0].nombre
+
     req.session.destroy(err=>{
-        res.redirect('/')
+       res.json({
+        mensaje:'Solicitando nombre usuario deslogeado',
+        nombre:nombre,
+        error:false
+    })
 
     })
 })
 
 router.get('/',(req,res)=>{
 
-     res.render('login')
-    //res.send('Hola')
+    //res.render('login')
+    console.log('ruta datos-Login usuario logeado')
+    console.log(req.user[0].nombre)
+    res.json({
+        mensaje:'Solicitando nombre usuario logeado',
+        nombre:req.user[0].nombre,
+        error:false
+    })
 })
 
 export default router

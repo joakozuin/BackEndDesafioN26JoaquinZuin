@@ -24,25 +24,29 @@ passport.use('registro',new LocalStrategy(
      console.log(usuarioBD)
 
       if(usuarioBD.usuario){
+        console.log('Registro passport usuario Registrado')
+        return done(null,false)
 
-       return done(null,false)
+       }else{
 
-       }
+         /* const usuarioNuevo = new usuariosDao()
+          usuarioNuevo.nombre = nombre
+          //usuarioNuevo.contrasena = password
+          usuarioNuevo.contrasena = 
+           await usuarioNuevo.save() */
 
-       /* const usuarioNuevo = new usuariosDao()
-       usuarioNuevo.nombre = nombre
-       //usuarioNuevo.contrasena = password
-       usuarioNuevo.contrasena = 
-       await usuarioNuevo.save() */
+          const us={
+            nombre:nombre,
+            contrasena:encriptar(password)
+           }
 
-       const us={
-        nombre:nombre,
-        contrasena:encriptar(password)
-       }
+           const usuarioNuevo=await Usuario.create(us)
 
-       const usuarioNuevo=Usuario.create(us)
-       done(null, usuarioNuevo)
+           console.log('Registro passport usuario Nuevo')
+            console.log(usuarioNuevo)
 
+        return done(null,usuarioNuevo)
+      }
     }
 
 ))
@@ -56,13 +60,6 @@ passport.use('login',new LocalStrategy({
 
     const usuarioBD = await Usuario.findNombre(nombre)
 
-    if(!usuarioBD.usuario){
-
-      console.log('Passport Login No existe Usuario')
-      return done(null,false)
- 
-    }
-
     const usPassBD=usuarioBD.usuario.contrasena
     
     const usP=comparar(password,usPassBD)
@@ -70,8 +67,12 @@ passport.use('login',new LocalStrategy({
     if(usuarioBD && usP){
 
       console.log('Passport Login Existe Usuario')
-      return done(null, usuarioBD)
+      return done(null, usuarioBD,{mensaje:'Usuario encontrado'})
 
+     }else{
+
+      console.log('Passport Login No existe Usuario')
+      return done(null,false,{mensaje:'Usuario no encontrado'})
      }
      
 }
@@ -83,21 +84,21 @@ passport.use('login',new LocalStrategy({
 //usuario es un argumento q utiliza para hacer
 //magia puede tener otro nombre, pero parece q se debe
 //repetar ese nombre en la serealización y deserealización
-passport.serializeUser((usuario,done)=>{
+passport.serializeUser(async(usuario,done)=>{
 
   console.log('Passport Serializando el usuario')
   console.log(usuario)
-  console.log(usuario.usuario._id)
-
-    done(null,usuario.usuario._id)
+ 
+    done(null,usuario)
 })
 
 passport.deserializeUser(async(id,done)=>{
-  console.log('Passport desSerializando el usuario')
-  console.log(id)
+  console.log('1-Passport desSerializando busca el usuario')
+  console.log(id.usuario._id)
   
-    const usuario = await Usuario.findById(id)
+    const usuario = await Usuario.findById(id.usuario._id)
 
+    console.log('2-Passport desSerializando usuario encontrado')
     console.log(usuario)
 
     done(null,usuario)

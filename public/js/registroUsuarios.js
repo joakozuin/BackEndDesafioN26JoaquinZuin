@@ -56,12 +56,18 @@ botonRegistro.addEventListener("click", (e) => {
           return respuesta.json()
     } )
     .then((data) => {
+      console.log(data);
+      console.log("2-Mensaje       :", data.mensaje);
       console.log("2-Nombre Usuario:", data.nombre);
       console.log("2-Error         :", data.error);
 
     //cargar una página HTML
     //
-     location.assign("http://localhost:8080/index.html");
+       if(data.error){
+        location.assign("http://localhost:8080/errorRegistro.html");
+       }else{
+        location.assign("http://localhost:8080/index.html");
+       }
 
     })
     .catch((error) => {

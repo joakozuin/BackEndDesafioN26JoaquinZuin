@@ -42,7 +42,7 @@ class MongoClase {
         const uno=await this.coleccion.find({_id:id})
         return uno
     } catch (error) {
-        throw new Error('Mensaje de Error:',error)
+        throw new Error('(Metodo finById)-Mensaje de Error:',error)
     }
   }
 

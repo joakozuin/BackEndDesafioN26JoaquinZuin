@@ -57,7 +57,7 @@ botonLogin.addEventListener("click", (e) => {
           console.log("1-Todo bien respuesta.url:", respuesta.url);
           console.log("1-Todo bien respuesta mensaje:",respuesta.mensaje);
           //console.log( respuesta.json());
-          //return respuesta.json()
+          return respuesta.json()
 
     } )
     .then((data) => {
@@ -68,8 +68,15 @@ botonLogin.addEventListener("click", (e) => {
 
     //cargar una pagina HTML
     //
+      if(data.error){
 
-     location.assign("http://localhost:8080/productos.html");
+        location.assign("http://localhost:8080/errorLogin.html");
+
+      }else{
+        
+        location.assign("http://localhost:8080/productos.html");
+        
+      }
 
     })
     .catch((error) => {
